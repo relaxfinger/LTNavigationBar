@@ -12,5 +12,7 @@
 - (void)lt_setBackgroundColor:(UIColor *)backgroundColor;
 - (void)lt_setElementsAlpha:(CGFloat)alpha;
 - (void)lt_setTranslationY:(CGFloat)translationY;
+- (void)lt_setBlur:(CGFloat)radius;
+- (void)lt_unBlur;
 - (void)lt_reset;
 @end

@@ -8,16 +8,17 @@
 
 #import "UINavigationBar+Awesome.h"
 #import <objc/runtime.h>
+#import "FXBlurView.h"
 
 @implementation UINavigationBar (Awesome)
 static char overlayKey;
 
-- (UIView *)overlay
+- (FXBlurView *)overlay
 {
     return objc_getAssociatedObject(self, &overlayKey);
 }
 
-- (void)setOverlay:(UIView *)overlay
+- (void)setOverlay:(FXBlurView *)overlay
 {
     objc_setAssociatedObject(self, &overlayKey, overlay, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
@@ -26,7 +27,8 @@ static char overlayKey;
 {
     if (!self.overlay) {
         [self setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-        self.overlay = [[UIView alloc] initWithFrame:CGRectMake(0, -20, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) + 20)];
+        self.overlay = [[FXBlurView alloc] initWithFrame:CGRectMake(0, -20, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) + 20)];
+        self.overlay.blurEnabled = NO;
         self.overlay.userInteractionEnabled = NO;
         self.overlay.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         [self insertSubview:self.overlay atIndex:0];
@@ -58,6 +60,16 @@ static char overlayKey;
             *stop = YES;
         }
     }];
+}
+
+- (void)lt_setBlur:(CGFloat)radius {
+    self.overlay.blurEnabled = YES;
+    self.overlay.dynamic = YES;
+    self.overlay.blurRadius = radius;
+}
+- (void)lt_unBlur {
+    self.overlay.blurEnabled = NO;
+    self.overlay.blurRadius = 0;
 }
 
 - (void)lt_reset
