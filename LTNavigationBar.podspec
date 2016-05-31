@@ -10,5 +10,5 @@ Pod::Spec.new do |s|
   s.source_files = "LTNavigationbar/UINavigationBar+Awesome.{h,m}"
   s.requires_arc = true
   s.platform     = :ios, '7.0'
-
+  s.dependency "FXBlurView", "~> 1.6.4"
 end
